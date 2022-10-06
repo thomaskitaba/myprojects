@@ -1,0 +1,227 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+
+{% if user_avilable %}
+
+
+{% endif %}
+
+    {% if index_display == "bought" %}
+        <div> <p> Bought!</p> </div>
+        <div> <p>user :{{user[0]["username"]}} </p> </div>
+    {% elif index_display == "sold" %}
+        <div> <p> Sold!</p> </div>
+        <h1> {{ check }}</h1>
+        <div> <p>user :{{user[0]["username"]}} </p> </div>
+    {% elif index_display == "stock_info" %}
+         </p>Users Stock Infromation !</p>
+         <div> <p>user :{{user[0]["username"]}} </p> </div>
+
+    {% elif index_display == "registered" %}
+        <div> <p> Registered!</p> </div>
+        <div> <p>user :{{user[0]["username"]}} </p> </div>
+    {% endif %}
+
+{% if (index_display == "bought") or (index_display == "registered") %}
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> id </th>
+                <th> Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>price</th>
+                <th>total</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                {% for row in rows %}
+                <tr>
+                    <td> {{row["id"]}}</td>
+                    <td> {{row["symbol"]}}</td>
+                    <td>  {{row["name"]}} </td>
+                    <td> {{row["shares"]}}</td>
+                    <td> {{"${:,.2f}".format(row["price"])}}</td>
+                    <td> {{"${:,.2f}".format((row["shares"] * row["price"] ) | round(2))}}</td>
+                </tr>
+                {% endfor %}
+
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td>CASH=</td>
+                    <td>{{"${:,.2f}".format((user[0]["cash"]) | round(2))}}</td>
+
+                </tr>
+                 <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td>TOTAL=</td>
+                    <td>{{ "${:,.2f}".format((total[0] + user[0]["cash"]) | round(2))}}</td>
+
+                </tr>
+
+        </tbody>
+    </table>
+
+{% elif index_display == "sold" %}
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> id </th>
+                <th> Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>price</th>
+                <th>total</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                {% for row in rows %}
+                <tr>
+                    <td> {{row["id"]}}</td>
+                    <td> {{row["symbol"]}}</td>
+                    <td>  {{row["name"]}} </td>
+                    <td> {{row["shares"]}}</td>
+                    <td> {{"${:,.2f}".format(row["price"])}}</td>
+                    <td> {{"${:,.2f}".format((row["shares"] * row["price"]  * -1) | round(2))}}</td>
+                </tr>
+                {% endfor %}
+
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td>CASH=</td>
+                    <td>{{"${:,.2f}".format((user[0]["cash"])  | round(2))}}</td>
+
+                </tr>
+                 <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td>TOTAL=</td>
+
+                    <td>{{"${:,.2f}".format( (rows[0]["shares"] * rows[0]["price"]  * -1  + user[0]["cash"]) | round(2))}}</td>
+
+                </tr>
+
+        </tbody>
+    </table>
+{% elif (index_display == "stock_info" ) %}
+
+   <!-- <div>
+    <p>user :{{user[0]["username"]}} </p>
+
+    </div> -->
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <!-- <th> id </th> -->
+                <th> Symbol</th>
+                <th>Name</th>
+                <!-- <th>Transaction_type</th> -->
+                <th>total_shares</th>
+                <!-- <th>price</th> -->
+
+            </tr>
+        </thead>
+        <tbody>
+
+                {% for row in rows %}
+                <tr>
+                    <!-- <td> {{row["id"]}}</td> -->
+                    <td> {{row["symbol"]}}</td>
+                    <td>  {{row["name"]}} </td>
+                    <!-- <td> {{ row["transaction_type"] }}</td> -->
+                    <td> {{ (row["total_shares"]) | round(0)}}</td>
+                    <!-- <td> {{row["price"]}}</td> -->
+
+
+                </tr>
+                {% endfor %}
+               <!-- <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td>CASH=</td>
+                    <td>{{(user[0]["cash"]) | round(2)}}</td>
+
+                </tr>
+
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td>TOTAL=</td>
+                    <td>{{ (total[0] + user[0]["cash"]) | round(2)}}</td>
+
+                </tr> -->
+
+
+        </tbody>
+    </table>
+
+
+{% elif (index_display == "history") %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> id </th>
+                <th> Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>price</th>
+                <th>Transaction_date</th>
+                <th>Transaction_type</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+                {% for row in rows %}
+                <tr>
+                    <td> {{row["id"]}}</td>
+                    <td> {{row["symbol"]}}</td>
+                    <td>  {{row["name"]}} </td>
+                    <td> {{row["shares"]}}</td>
+                    <td> {{"${:,.2f}".format(row["price"])}}</td>
+                    <td> {{row["transactions"]}}</td>
+                    <td> {{row["transaction_type"]}}</td>
+                </tr>
+                {% endfor %}
+
+
+        </tbody>
+    </table>
+
+{% else %}
+
+<h1> What do you wont to do?</h1>
+
+{% endif %}
+
+
+{% endblock %}
+

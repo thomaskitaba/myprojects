@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+
+
+
+<div> <p> History</p> </div>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th> id </th>
+            <th> Symbol</th>
+            <th>Name</th>
+            <th>Shares</th>
+            <th>price</th>
+            <th>total</th>
+        </tr>
+    </thead>
+    <tbody>
+
+            {% for row in rows %}
+            <tr>
+                <td> {{row["id"]}}</td>
+                <td> {{row["symbol"]}}</td>
+                <td>  {{row["name"]}} </td>
+                <td> {{row["shares"]}}</td>
+                <td> {{row["price"]}}</td>
+                <td> {{row["shares"] * row["price"]}}</td>
+            </tr>
+            {% endfor %}
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>TOTAL=</td>
+                <td>{{cash_remaining}}</td>
+
+            </tr>
+
+    </tbody>
+</table>
+
+
+</table>
+
+
+{% endblock %}
